@@ -8,7 +8,6 @@ require_relative 'models/peep'
 
 class Chitter < Sinatra::Base
   register Sinatra::Flash
-  # use Rack:MethodOverride
   enable :sessions
   set :session_secret, 'super secret'
 
@@ -61,8 +60,17 @@ class Chitter < Sinatra::Base
     peep = Peep.create(title: params[:title], content: params[:content], time: Time.now)
     user.peeps << peep
     user.save
-    p peep.user.username
     redirect '/logged_in'
+  end
+
+  get '/comment' do
+    erb :comment
+  end
+
+  post '/comment' do
+    user = User.get(session[:user_id])
+    comment = Comment.create
+    peep.comments << comment
   end
 
   # start the server if ruby file executed directly
