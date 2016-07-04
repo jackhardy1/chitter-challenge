@@ -18,7 +18,8 @@ Aim: To build a twitter clone, where users can sign up, log in, and create their
 #### Intallation instructions
 
 ```
-$ git clone https://github.com/tansaku/chitter_challenge
+install postgreSQL, then from the command line run the following:
+$ git clone https://github.com/jackhardy1/chitter-challenge
 $ bundle
 $ createdb chitter_development
 $ rake db:auto_migrate
