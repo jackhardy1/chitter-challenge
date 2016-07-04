@@ -21,7 +21,7 @@ Aim: To build a twitter clone, where users can sign up, log in, and create their
 install postgreSQL, then from the command line run the following:
 $ git clone https://github.com/jackhardy1/chitter-challenge
 $ bundle
-$ createdb chitter_development
+$ rake db:create
 $ rake db:auto_migrate
 $ rspec
 $ rackup
