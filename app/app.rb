@@ -8,15 +8,8 @@ require_relative 'models/peep'
 
 class Chitter < Sinatra::Base
   register Sinatra::Flash
-  # use Rack:MethodOverride
   enable :sessions
   set :session_secret, 'super secret'
-
-  helpers do
-    def current_user
-      @current_user ||= User.get(session[:user_id])
-    end
-  end
 
   get '/' do
     erb :index
@@ -26,7 +19,7 @@ class Chitter < Sinatra::Base
     erb :sign_up
   end
 
-  post '/sign_up' do
+  post '/sign_up' do #should be users
     user = User.create(name: params[:name],
     username: params[:username],
     email: params[:email],
@@ -40,7 +33,7 @@ class Chitter < Sinatra::Base
     erb :log_in
   end
 
-  post '/log_in' do
+  post '/log_in' do #better as session
     user = User.authenticate(params[:username],params[:password])
     if user
       session[:user_id] = user.id
@@ -51,12 +44,12 @@ class Chitter < Sinatra::Base
     end
   end
 
-  get '/logged_in' do
+  get '/logged_in' do #home / username
     @user = User.get(session[:user_id])
     erb :logged_in
   end
 
-  post '/add_peep' do
+  post '/add_peep' do #better as peeps
     user = User.get(session[:user_id])
     peep = Peep.create(title: params[:title], content: params[:content], time: Time.now)
     user.peeps << peep
